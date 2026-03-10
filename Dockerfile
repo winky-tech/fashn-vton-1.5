@@ -11,11 +11,11 @@ WORKDIR /
 COPY . .
 
 # Install the fashn_vton package and the runpod library
-RUN pip install . runpod
+RUN python3 -m pip install --no-cache-dir . runpod
 
 # Pre-download the weights so the worker doesn't download them on every start
 # This saves about 2-3 minutes of "Cold Start" time for your users
-RUN python3 scripts/download_weights.py --weights-dir ./weights
+RUN python3 scripts/download_weights.py --weights-dir ./weights || (echo "Download failed. Dumping pip and error info:" && python3 -m pip list && exit 1)
 
 # Run the handler script when the container starts
 CMD [ "python3", "-u", "/rp_handler.py" ]
