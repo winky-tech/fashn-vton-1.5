@@ -15,7 +15,7 @@ RUN pip install . runpod
 
 # Pre-download the weights so the worker doesn't download them on every start
 # This saves about 2-3 minutes of "Cold Start" time for your users
-RUN python scripts/download_weights.py --weights-dir ./weights
+RUN python3 scripts/download_weights.py --weights-dir ./weights
 
 # Run the handler script when the container starts
 CMD [ "python3", "-u", "/rp_handler.py" ]
